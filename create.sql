@@ -1,14 +1,14 @@
 DROP TABLE if exists Question;
 CREATE TABLE Question(
-  title VARCHAR(50),
-  content VARCHAR(50),
+  title VARCHAR(50) NOT NULL,
+  content VARCHAR(50) NOT NULL,
   questionid INTEGER, 
   PRIMARY KEY (questionid));
 
 DROP TABLE if exists Task;
 CREATE TABLE Task(
-  title VARCHAR(50),
-  content VARCHAR(50),
+  title VARCHAR(50) NOT NULL,
+  content VARCHAR(50) NOT NULL,
   questionid INTEGER NOT NULL, 
   taskid INTEGER NOT NULL,
   PRIMARY KEY (taskid));
@@ -17,8 +17,8 @@ DROP TABLE IF EXISTS Task_question;
 CREATE TABLE Task_question(
   taskid INTEGER NOT NULL,
   questionid INTEGER NOT NULL,
-  FOREIGN KEY (taskid) REFERENCES Task,
-  FOREIGN KEY (questionid) REFERENCES Question,
+  FOREIGN KEY (taskid) REFERENCES Task ON UPDATE RESTRICT ON DELETE RESTRICT,
+  FOREIGN KEY (questionid) REFERENCES Question ON UPDATE RESTRICT ON DELETE RESTRICT,
   PRIMARY KEY (taskid, questionid));
   
 DROP TABLE IF EXISTS Assignment;
