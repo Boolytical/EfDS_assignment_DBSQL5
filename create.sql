@@ -16,10 +16,9 @@ DROP TABLE if exists Task;
 CREATE TABLE Task(
   title VARCHAR(50) NOT NULL,
   content VARCHAR(50) NOT NULL,
-  questionid INTEGER NOT NULL, 
   taskid INTEGER PRIMARY KEY AUTOINCREMENT
   );
-  
+  --check if the intermidiate table Task_question is correct
 DROP TABLE IF EXISTS Task_question;
 CREATE TABLE Task_question(
   taskid INTEGER NOT NULL,
@@ -40,7 +39,7 @@ CREATE TABLE Assignment(
 CREATE TRIGGER IF NOT EXISTS NEW_ASSIGNMENT
 AFTER INSERT ON Assignment
 BEGIN 
-	PRINT('New assignment has been added') 
+	PRINT 'New assignment has been added'; 
 END;
 
 
@@ -53,7 +52,7 @@ CREATE TABLE Submission(
 CREATE TRIGGER IF NOT EXISTS NEW_SUBMISSION
 AFTER INSERT ON Submission
 BEGIN 
-	PRINT('New submission has been added') 
+	PRINT 'New submission has been added';
 END;
   
 DROP TABLE IF EXISTS Answers;
@@ -70,15 +69,14 @@ DROP TABLE IF EXISTS EvaluationRequest;
 CREATE TABLE EvaluationRequest(
   submissionid INTEGER NOT NULL, 
   requestid INTEGER PRIMARY KEY AUTOINCREMENT,
-  FOREIGN KEY (submissionid) REFERENCES Submission ON UPDATE RESTRICT);
+  FOREIGN KEY (submissionid) REFERENCES Submission ON UPDATE RESTRICT ON DELETE RESTRICT);
 
 -- Make sure that the ON UPDATE NO ACTION can be added on scores
 -- or make a INSTEAD OF trigger so the table scores isn't changed
 DROP TABLE IF EXISTS Evaluation;
 CREATE TABLE Evaluation(
   evaluationid INTEGER NOT NULL,
-  requestid INTEGER PRIMARY KEY AUTOINCREMENT
-  );
+  requestid INTEGER PRIMARY KEY AUTOINCREMENT);
 
 DROP TABLE IF EXISTS Score;
 CREATE TABLE Score(
@@ -86,19 +84,19 @@ CREATE TABLE Score(
   scoreid INTEGER PRIMARY KEY AUTOINCREMENT,
   answerid INTEGER NOT NULL, 
   evaluationid INTEGER NOT NULL, 
-  FOREIGN KEY (answerid) REFERENCES , 
-  FOREIGN KEY (evaluationid) REFERENCES);
+  FOREIGN KEY (answerid) REFERENCES Answers, 
+  FOREIGN KEY (evaluationid) REFERENCES Evaluation);
 
 DROP TABLE IF EXISTS EvaluationFinished;
 CREATE TABLE EvaluationFinished(
   finishedid INTEGER PRIMARY KEY AUTOINCREMENT, 
   evaluationid INTEGER NOT NULL,
-  FOREIGN KEY (evaluationid) REFERENCES Evaluation);
+  FOREIGN KEY (evaluationid) REFERENCES Evaluation ON UPDATE RESTRICT ON DELETE RESTRICT);
 
 CREATE TRIGGER IF NOT EXISTS SUBMISSION_EVALUATED
 AFTER INSERT ON EvaluationFinished
 BEGIN 
-	PRINT('Your submission has been evaluated') 
+	PRINT 'Your submission has been evaluated';
 END;
 
 CREATE TRIGGER IF NOT EXISTS COMMITED_SUBMISSION
@@ -107,5 +105,14 @@ BEGIN
 SELECT CASE
 WHEN NOT((SELECT submissionid FROM EvaluationRequest WHERE submissionid == NEW.submissionid) ISNULL)
 THEN RAISE(ABORT, 'Cannot add answer to a submission which is commited')
+END;
+END;
+
+CREATE TRIGGER IF NOT EXISTS SCORES_ADDED
+BEFORE INSERT ON Score
+BEGIN
+SELECT CASE
+WHEN NOT ((SELECT evaluationid FROM EvaluationFinished WHERE evaluationid == NEW.evaluationid) ISNULL)
+THEN RAISE(ABORT, 'Cannot add score to an evaluation which is finished')
 END;
 END;
