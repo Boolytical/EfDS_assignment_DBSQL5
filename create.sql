@@ -18,7 +18,7 @@ CREATE TABLE Task(
   content VARCHAR(50) NOT NULL,
   taskid INTEGER PRIMARY KEY AUTOINCREMENT
   );
-  --check if the intermidiate table Task_question is correct
+
 DROP TABLE IF EXISTS Task_question;
 CREATE TABLE Task_question(
   taskid INTEGER NOT NULL,
@@ -35,13 +35,12 @@ CREATE TABLE Assignment(
   FOREIGN KEY (taskid) REFERENCES Task ON UPDATE RESTRICT ON DELETE RESTRICT, 
   FOREIGN KEY (universityid) REFERENCES Student ON UPDATE RESTRICT ON DELETE RESTRICT
   ); 
-  -- i am not sure if the trigger has the option of print, couldnt find anything about it 
+
 CREATE TRIGGER IF NOT EXISTS NEW_ASSIGNMENT
 AFTER INSERT ON Assignment
 BEGIN 
-	PRINT 'New assignment has been added'; 
+	SELECT 'New assignment has been added'; 
 END;
-
 
 DROP TABLE IF EXISTS Submission; 
 CREATE TABLE Submission(
@@ -52,7 +51,7 @@ CREATE TABLE Submission(
 CREATE TRIGGER IF NOT EXISTS NEW_SUBMISSION
 AFTER INSERT ON Submission
 BEGIN 
-	PRINT 'New submission has been added';
+	SELECT 'New submission has been added';
 END;
   
 DROP TABLE IF EXISTS Answers;
@@ -71,8 +70,6 @@ CREATE TABLE EvaluationRequest(
   requestid INTEGER PRIMARY KEY AUTOINCREMENT,
   FOREIGN KEY (submissionid) REFERENCES Submission ON UPDATE RESTRICT ON DELETE RESTRICT);
 
--- Make sure that the ON UPDATE NO ACTION can be added on scores
--- or make a INSTEAD OF trigger so the table scores isn't changed
 DROP TABLE IF EXISTS Evaluation;
 CREATE TABLE Evaluation(
   evaluationid INTEGER NOT NULL,
@@ -96,7 +93,7 @@ CREATE TABLE EvaluationFinished(
 CREATE TRIGGER IF NOT EXISTS SUBMISSION_EVALUATED
 AFTER INSERT ON EvaluationFinished
 BEGIN 
-	PRINT 'Your submission has been evaluated';
+	SELECT 'Your submission has been evaluated';
 END;
 
 CREATE TRIGGER IF NOT EXISTS COMMITED_SUBMISSION
