@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship, declarative_base, sessionmaker
 base = declarative_base()
 class Task(base):
     _tablename_ = "Task"
-    taskID = Column(Integer,primary_key=True)
+    taskid = Column(Integer,primary_key=True)
     title = Column(string(50))
     content = Column(string(50))
     assignment_r = relationship("Assignment")
@@ -16,39 +16,39 @@ class Task(base):
     
 class Assignment(base):
     _tablename_ = "Assignment"
-    assignmentID = Column(Integer,primary_key=True)
-    universityID = Column(ForeignKey('Student.universityID'), nullable=True)
-    taskID = Column(ForeignKey('Task.taskID'), nullable=True)
+    assignmentid = Column(Integer,primary_key=True)
+    universityid = Column(ForeignKey('Student.universityid'))
+    taskid = Column(ForeignKey('Task.taskid'), nullable=True)
     submission_r = relationship("Submission")
     
 class Task_question(base):
     _tablename_ = "Task_question"
-    taskID = Column(ForeignKey('Task.taskID'), nullable=True)
-    questionID = Column(ForeignKey('Question.QuestionID'), nullable=True)
+    taskid = Column(ForeignKey('Task.taskid'))
+    questionid = Column(ForeignKey('Question.questionid'), nullable=True)
 
 class Student(base):
     _tablename_ = "Student"
-    universityID = Column(Integer,primary_key=True)
+    universityid = Column(Integer,primary_key=True)
     name = Column(string)
     email = Column(string)
     sttudent_r = relationship("Assignment")
     
 class Submission(base):
     _tablename_ = "Submission"
-    submissionID = Column(Integer,primary_key=True)
-    assignmentID = Column(ForeignKey('Assignment.AssignmentID'), nullable=True)
+    submissionid = Column(Integer,primary_key=True)
+    assignmentid = Column(ForeignKey('Assignment.assignmentid'), nullable=True)
     eval_r = relationship("EvaluationRequest")
     answers_r = relationship("Answers")
     
 class EvaluationRequest(base):
     _tablename_ = "EvaluationRequest"
-    requestID = Column(Integer,primary_key=True)
-    submissionID = Column(ForeignKey('Submission.submissionID'), nullable=True)
+    requestid = Column(Integer,primary_key=True)
+    submissionid = Column(ForeignKey('Submission.submissionid'), nullable=True)
     eval_r = relationship("Evaluation")
     
 class Question(base):
     _tablename_ = "Question"
-    questionID = Column(Integer,primary_key=True)
+    questionid = Column(Integer,primary_key=True)
     title = Column(String(50))
     content = Column(string(50))
     task_q_r = relationship("Task_question")
@@ -56,26 +56,27 @@ class Question(base):
     
 class Answers(base):
     _tablename_ = "Answers"
-    answerID = Column(Integer,primary_key=True)
+    answerid = Column(Integer,primary_key=True)
     content = Column(string(1000))
-    questionId = Column(ForeignKey('Question.QuestionID'), nullable=True)
-    sumissionID = Column(Integer)
+    questionId = Column(ForeignKey('Question.questionid'), nullable=True)
+    sumissionid = Column(ForeignKey('Submission.submissionid'))
     scores_r = relationship("Scores")
     
 class Evaluation(base):
     _tablename_ = "Evaluation"
-    evaluationID = Column(Integer, primary_key = True)
-    requestID = Column(ForeignKey('EvaluationRequest.requestID'), nullable=True)
+    evaluationid = Column(Integer, primary_key = True)
+    requestid = Column(ForeignKey('EvaluationRequest.requestid'), nullable=True)
     evaluation_f_r = relationship("EvaluationFinished")
     scores_r = relationship("Scores")
+
 class Scores(base):
     _tablename_ = "Scores"
-    scoreID = Column(Integer, primary_key = True)
+    scoreid = Column(Integer, primary_key = True)
     value = Column(Integer)
-    answerID Column(ForeignKey('Answers.answerId'),nullable = True)
-    evaluationID = Column(Integer)
+    answerid = Column(ForeignKey('Answers.answerid'),nullable = True)
+    evaluationid = Column(ForeignKey('Evaluation.evaluationid'))
     
 class EvaluationFinished(base):
     _tablename_ = "EvaluationFinished"
-    finishedID = Column(Integer, primary_key = True)
-    evaluationId = Column(ForeignKey('Evaluation.evaluationID'),nullable = True)
+    finishedid = Column(Integer, primary_key = True)
+    evaluationid = Column(ForeignKey('Evaluation.evaluationid'),nullable = True)
