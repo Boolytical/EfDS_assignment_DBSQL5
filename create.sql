@@ -3,7 +3,7 @@ CREATE TABLE Student(
   st_name VARCHAR(50) NOT NULL, 
   email VARCHAR(50) UNIQUE NOT NULL,
   universityid INTEGER NOT NULL,
-  PRIMARY KEY (universityID));
+  PRIMARY KEY (universityid));
   
 DROP TABLE if exists Question;
 CREATE TABLE Question(
