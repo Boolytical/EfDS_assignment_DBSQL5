@@ -7,7 +7,7 @@ from sqlalchemy.orm import relationship, declarative_base, sessionmaker
 
 base = declarative_base()
 class Task(base):
-   __tablename__ = "Task"
+    __tablename__ = "Task"
     taskid = Column(Integer,primary_key=True)
     title = Column(String(50))
     content = Column(String(50))
