@@ -1,6 +1,5 @@
 from schema import *
 from asyncio.windows_events import NULL
-from curses.ascii import isalnum, isalpha
 from logging import exception
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, MetaData
 from sqlalchemy.orm import relationship, declarative_base, sessionmaker
@@ -17,15 +16,15 @@ class Gradedb:
 
     def addStudent(self, name, email, id):
         '''The teacher adds the student's name, email and id to the database (input of addStudent function).
-        It checks if there is a student with no name, if so, it raises an exception'''
+            It checks if there is a student with no name, if so, it raises an exception'''
         if not name.isalpha():
             raise Exception("Name must be provided")
         else:
             with self.newSession() as ses:
-                s = Student(Name = name, Email = email, UniversityId=id) #suppose we have the class Student
+                s = Student(name=name, email=email, universityid=id) #suppose we have the class Student
                 ses.add(s)
                 ses.commit()
-                return s.universityID
+                return s.universityid
     
     def addQuestion(self, title, content):
         '''The teacher adds questions by providing the title and the content (input of addQuestion function).

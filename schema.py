@@ -23,7 +23,7 @@ class Assignment(base):
     
 class Task_question(base):
     __tablename__ = "Task_question"
-    id(Integer, primary_key = True)
+    id = Column(Integer, primary_key = True)
     taskid = Column(ForeignKey('Task.taskid'))
     questionid = Column(ForeignKey('Question.questionid'), nullable=True)
 
