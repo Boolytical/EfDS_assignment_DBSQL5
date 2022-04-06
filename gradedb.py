@@ -1,8 +1,10 @@
+from schema import *
 from asyncio.windows_events import NULL
 from curses.ascii import isalnum, isalpha
 from logging import exception
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, MetaData
 from sqlalchemy.orm import relationship, declarative_base, sessionmaker
+from sqlalchemy.sql import select
 
 class Gradedb:
     def __init__(self, fileName):
@@ -75,7 +77,7 @@ class Gradedb:
             pass
         else:
             with self.newSession() as ses:
-                an = Answer(Text = content, Question = questionid, Submission = submissionid)
+                an = Answers(Text = content, Question = questionid, Submission = submissionid)
                 ses.add(an)
                 ses.commit()
                 return an.answerid
@@ -111,7 +113,7 @@ class Gradedb:
             raise Exception("Score must be between 1 and 10")
         else:
             with self.newSession() as ses:
-                sc = Score(Value = score, Evaluation = evaluationid, Answer = answerid)
+                sc = Scores(Value = score, Evaluation = evaluationid, Answer = answerid)
                 ses.add(sc)
                 ses.commit()
                 return sc.scoreid
