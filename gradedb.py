@@ -16,7 +16,7 @@ class Gradedb:
     def addStudent(self, name, email, id):
         '''The teacher adds the student's name, email and id to the database (input of addStudent function).
         It checks if there is a student with no name, if so, it raises an exception'''
-        if not isalpha(name):
+        if not name.isalpha():
             raise Exception("Name must be provided")
         else:
             with self.newSession() as ses:
@@ -28,7 +28,7 @@ class Gradedb:
     def addQuestion(self, title, content):
         '''The teacher adds questions by providing the title and the content (input of addQuestion function).
         It checks if the content of the question is empty, if so, it raises an exception'''
-        if not isalnum(content):
+        if not content.isalnum():
             raise Exception("Content must be provided")
         else:
             with self.newSession() as ses:
