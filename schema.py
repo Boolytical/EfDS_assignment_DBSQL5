@@ -9,8 +9,8 @@ base = declarative_base()
 class Task(base):
     _tablename_ = "Task"
     taskid = Column(Integer,primary_key=True)
-    title = Column(string(50))
-    content = Column(string(50))
+    title = Column(String(50))
+    content = Column(String(50))
     assignment_r = relationship("Assignment")
     task_q_r = relationship("Task_question")
     
@@ -29,8 +29,8 @@ class Task_question(base):
 class Student(base):
     _tablename_ = "Student"
     universityid = Column(Integer,primary_key=True)
-    name = Column(string)
-    email = Column(string)
+    name = Column(String)
+    email = Column(String)
     sttudent_r = relationship("Assignment")
     
 class Submission(base):
@@ -50,14 +50,14 @@ class Question(base):
     _tablename_ = "Question"
     questionid = Column(Integer,primary_key=True)
     title = Column(String(50))
-    content = Column(string(50))
+    content = Column(String(50))
     task_q_r = relationship("Task_question")
     answer_r = relationship("Answer")
     
 class Answers(base):
     _tablename_ = "Answers"
     answerid = Column(Integer,primary_key=True)
-    content = Column(string(1000))
+    content = Column(String(1000))
     questionId = Column(ForeignKey('Question.questionid'), nullable=True)
     sumissionid = Column(ForeignKey('Submission.submissionid'))
     scores_r = relationship("Scores")
