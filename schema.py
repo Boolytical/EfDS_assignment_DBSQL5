@@ -60,7 +60,7 @@ class Answers(base):
     answerid = Column(Integer,primary_key=True)
     content = Column(String(1000))
     questionId = Column(ForeignKey('Question.questionid'), nullable=True)
-    sumissionid = Column(ForeignKey('Submission.submissionid'))
+    submissionid = Column(ForeignKey('Submission.submissionid'))
     scores_r = relationship("Scores")
     
 class Evaluation(base):
