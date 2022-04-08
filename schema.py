@@ -29,7 +29,7 @@ class Task_question(base):
 
 class Student(base):
     __tablename__ = "Student"
-    universityid = Column(Integer,primary_key=True)
+    universityid = Column(String(7),primary_key=True)
     name = Column(String)
     email = Column(String)
     sttudent_r = relationship("Assignment")
