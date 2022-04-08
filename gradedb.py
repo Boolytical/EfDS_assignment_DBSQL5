@@ -29,7 +29,7 @@ class Gradedb:
     def addQuestion(self, title, content):
         '''The teacher adds questions by providing the title and the content (input of addQuestion function).
         It checks if the content of the question is empty, if so, it raises an exception'''
-        if not content.isalnum():
+        if len(content) == 0:
             raise Exception("Content must be provided")
         else:
             with self.newSession() as ses:
