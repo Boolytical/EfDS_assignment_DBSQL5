@@ -1,3 +1,4 @@
+from os.path import exists
 from schema import *
 from asyncio.windows_events import NULL
 from logging import exception
@@ -6,25 +7,43 @@ from sqlalchemy.orm import relationship, declarative_base, sessionmaker
 from sqlalchemy.sql import select
 
 class Gradedb:
-    def __init__(self, fileName):
-         addr = "sqlite:///" + fileName
-         self._engine = create_engine(addr,echo=False)
-         self._sessionMaker = sessionmaker(bind=self._engine)
+    def __init__(self, fileName, mustExist):
+        file_exists = exists(fileName)
+        if not file_exists and mustExist:
+            raise Exception("Argument mustExist was set to True but the database file does not exist")
+        if not mustExist and file_exists:
+            raise Exception("Argument mustExist was set to False but the database file exists. If you want \
+                to create a new database, please remove the .db file or give a different name")
+        
+        addr = "sqlite:///" + fileName
+        self._engine = create_engine(addr,echo=False)
+        if not mustExist:
+            # gets the classes from the schema file and creates the database
+            base.metadata.create_all(self._engine)
+        self._sessionMaker = sessionmaker(bind=self._engine)
     
     def newSession(self):
         return self._sessionMaker()
 
+    def checkUniId(self, id):
+        if not id[0] == "S":
+            raise Exception("University id not given correctly. Format: S#######")
+        else:
+            if not id[1:].isnumeric():
+                raise Exception("University id hmust had 6 digits after S")
+        return True
+
     def addStudent(self, name, email, id):
         '''The teacher adds the student's name, email and id to the database (input of addStudent function).
             It checks if there is a student with no name, if so, it raises an exception'''
-        if not name.isalpha():
+        if not all(x.isalpha() or x.isspace() for x in name):
             raise Exception("Name must be provided")
-        else:
-            with self.newSession() as ses:
-                s = Student(name=name, email=email, universityid=id) #suppose we have the class Student
-                ses.add(s)
-                ses.commit()
-                return s.universityid
+        self.checkUniId(id)
+        with self.newSession() as ses:
+            s = Student(name=name, email=email, universityid=id) #suppose we have the class Student
+            ses.add(s)
+            ses.commit()
+            return s.universityid
     
     def addQuestion(self, title, content):
         '''The teacher adds questions by providing the title and the content (input of addQuestion function).
@@ -91,10 +110,6 @@ class Gradedb:
 
     def commitSubmission(self, submissionid):
         '''A student commits a submission by providing the submissionid (input of the commitSubmission function).'''
-        ## TO DO: use submissionid > assignmentid > universityid to check if the universityid already has a submissionid to their name ##
-        # if select(Student).where()
-        #     pass
-        # else:
         with self.newSession() as ses:
             cs = EvaluationRequest(submissionid = submissionid)
             ses.add(cs)
