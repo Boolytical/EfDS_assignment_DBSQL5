@@ -13,11 +13,11 @@ For this assignment the SQLAlchemy version 1.4 Object Relational Mapper framewor
 * `schema.pdf`        This file contains 
 * `create.sql`            This file contains    
 * `experimenter.py`   This file contains 
-* `gradedb.py`           This file contains 
-* `random_init.ipynb`        This file contains 
-* `student_summary.ipynb`            This file contains    
-* `student_details.ipynb`   This file contains 
-* `teacher_summary.ipynb`   This file contains 
+* `random_init.ipynb`  Database(document create) which contains random data could be initialized in this notebook    
+* `student_summary.ipynb`            This file contains a notebook  which will represent some general information about students such as total grades for the reports, evaluation and whether submitted reports are pending. Each corresponding studend can be identified by Studentid.
+* `student_details.ipynb`   This jupyter notebook all details from the database which was created for the corresponding student. Each student can be identified just like "student_summary" file, using a studentid.
+* `teacher_summary.ipynb`   This file contains grouped tasks and present students who assigned to each specific task, the solutions that already submitted and which solutions are already evaluated  and pendings for the evaluation.
+
 ***
 
 ## Packages that need to be installed
