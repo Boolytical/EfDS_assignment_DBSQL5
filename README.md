@@ -9,11 +9,11 @@ For this assignment the SQLAlchemy version 1.4 Object Relational Mapper framewor
 
 ## Descriptions of the files
 ***
-* `gradedb.py`           This file contains the main class GradeDB. This class has methods  
-* `schema.pdf`        This file contains 
-* `create.sql`            This file contains    
-* `experimenter.py`   This file contains 
-* `random_init.ipynb`  Database(document create) which contains random data could be initialized in this notebook    
+* `gradedb.py`           This file contains the main class GradeDB. Creating an object of this class provides access to work with and maintain the database. The class contains methods that allow to adjust and maintain the database.   
+* `schema.pdf`        This file displays the relational schema of the database with all its tables and relations between tables. Furthermore, attributes of primary keys of each table are listed.
+* `create.sql`            This file contains SQL-code to create the tables of the database, relations between tables are implemented as well as triggers that fire when certain events within the databes occur. All this is based on the relational schema.     
+* `schema.py`  This file contains SQLAlchemy description of the database tables and relationships between tables. Among others, declarative mapping is used to define basic units of data storage and connection between two mapped classes are constructed via relationship().
+* `random_init.ipynb`  Notebook that initializes the Database (document create) with random data 
 * `student_summary.ipynb`            This file contains a notebook  which will represent some general information about students such as total grades for the reports, evaluation and whether submitted reports are pending. Each corresponding studend can be identified by Studentid.
 * `student_details.ipynb`   This jupyter notebook all details from the database which was created for the corresponding student. Each student can be identified just like "student_summary" file, using a studentid.
 * `teacher_summary.ipynb`   This file contains grouped tasks and present students who assigned to each specific task, the solutions that already submitted and which solutions are already evaluated  and pendings for the evaluation.
@@ -39,3 +39,5 @@ For this assignment the SQLAlchemy version 1.4 Object Relational Mapper framewor
 ***
 
 ***
+
+
