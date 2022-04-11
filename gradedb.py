@@ -2,7 +2,7 @@ from os.path import exists
 from os import listdir
 import sys
 from schema import *
-from asyncio.windows_events import NULL
+from asyncio.windows_events import NULL     # add '#' in front for macOS
 from logging import exception
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, MetaData
 from sqlalchemy.orm import relationship, declarative_base, sessionmaker
