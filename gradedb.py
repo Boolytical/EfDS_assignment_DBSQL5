@@ -1,4 +1,6 @@
 from os.path import exists
+from os import listdir
+import sys
 from schema import *
 from asyncio.windows_events import NULL
 from logging import exception
@@ -267,4 +269,75 @@ class Gradedb:
             ses.commit()
             print("Submission evaluated")
             return ev.finishedid
+
+
+if __name__ == "__main__":
+    num_args = len(sys.argv)
+    args = sys.argv
+    database = None
+
+    # go in the current directory and check the files
+    # try and find the .db file to get its name
+    # it will be used to connect to the database
+    for file in os.listdir("."):
+        if file.endswith(".db"):
+            database = file
+            break
+    # if we did not find a .db file, it means it doesn't exist
+    # abort
+    if database is None:
+        print("No database found")
+        exit()
+    # we found a .db file
+    # use it to create the Gradedb object and get a connection to the database
+    t = Gradedb(database, True)
+
+    if num_args < 2:
+        print("Not enough arguments given")
+        print("Please give function to execute")
+        exit()
+
+    if args[1] == "addStudent":
+        if not num_args == 8:
+            print("Not enough arguments given for addStudent function")
+            print("Usage: addStudent -Name 'name' -UniversityId 'id' -Email 'email'")
+            exit()
+        name = None
+        email = None
+        id = None
+        for i in range(num_args):
+            if args[i] == '-Name':
+                if i + 1 < num_args:
+                    name = args[i + 1]
+            if args[i] == '-UniversityId':
+                if i + 1 < num_args:
+                    id = args[i + 1]
+            if args[i] == '-Email':
+                if i + 1 < num_args:
+                    email = args[i + 1]
+        if name is None or email is None or id is None:
+            print("Correct arguments not found")
+            print("Run gradedb.py addStudent to get usage")
+            exit()
+        t.addStudent(name=name, email=email, id=id)
+
+    if args[1] == "addQuestion":
+        if not num_args == 6:
+            print("Not enough arguments given for addQuestion")
+            print("Usage: addQuestion -Title 'title' -Content 'content'")
+            exit()
+        title = None
+        content = None
+        for i in range(num_args):
+            if args[i] == '-Title':
+                if i + 1 < num_args:
+                    title = args[i + 1]
+            if args[i] == '-Content':
+                if i + 1 < num_args:
+                    content = args[i + 1]
+        if title is None or content is None:
+            print("Correct arguments not found")
+            print("Run gradedb.py addQuestion to get usage")
+            exit()
+        t.addQuestion(title, content)
 
