@@ -1,7 +1,7 @@
 # Essentials for Data Science (Relational DBs,
 SQL, ORM): Group assignment 2021/22
 
-By Marios Chritoforides, Luise Gummi, Iliana Kleovoulou , Vivianne Coppes, Esmee Roosenmaallen and Felix Kapulla
+By Marios Chritoforides, Luise Gummi, Iliana Kleovoulou , Vivianne Coppes, Esmée Roosenmaallen and Felix Kapulla
 
 *** 
 For this assignment the SQLAlchemy version 1.4 Object Relational Mapper framework for the classes representing the database tables is used. The provided files contain the framework to create the relational database GradeDB. The database is initialized with some random content. By means of the Python access class GradeDB (within `gradedb.py`) and its methods, database tables and relations between tables are maintained. 
