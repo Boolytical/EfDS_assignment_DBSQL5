@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS Student;
 CREATE TABLE Student(
   st_name VARCHAR(50) NOT NULL, 
   email VARCHAR(50) UNIQUE NOT NULL,
-  universityid CHAR(7) NOT NULL,
+  universityid VARCHAR(7) NOT NULL,
   PRIMARY KEY (universityid));
   
 DROP TABLE if exists Question;

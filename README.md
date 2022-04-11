@@ -1,7 +1,7 @@
 # Essentials for Data Science (Relational DBs,
 SQL, ORM): Group assignment 2021/22
 
-By Marios Chritoforides, Luise Gummi, Iliana Kleovoulou , Vivianne Coppes, Esmee and Felix Kapulla
+By Marios Chritoforides, Luise Gummi, Iliana Kleovoulou , Vivianne Coppes, Esmee Roosenmaallen and Felix Kapulla
 
 *** 
 For this assignment the SQLAlchemy version 1.4 Object Relational Mapper framework for the classes representing the database tables is used. The provided files contain the framework to create the relational database GradeDB. The database is initialized with some random content. By means of the Python access class GradeDB (within `gradedb.py`) and its methods, database tables and relations between tables are maintained. 
@@ -37,7 +37,7 @@ For this assignment the SQLAlchemy version 1.4 Object Relational Mapper framewor
 
 ## How to work with the Database
 ***
-Firstly, to create the foundation of the database (all tables and their relations), the SQL-code within `create.sql` and needs to be run. Doing this in Python is achieved by running the code within `schema.py`. Afterwards, the Database can be initialized with random content by means of the `random_init.ipynb` notebook. Next, the class GradeDB within `gradedb.py` provides the framework to change and/or maintain the database by means of several methods. E.g. first create an object of class GradeDB. Then apply method .addStudent() on that object in order to add a student to the database with its Name, Email and unique UniversitID. 
+Firstly, to create the foundation of the database (all tables and their relations), the SQL-code within `create.sql` and needs to be run. Doing this in Python is achieved by running the code within `schema.py`. Afterwards, the Database can be initialized with random content by means of the `random_init.ipynb` notebook. Next, the class GradeDB within `gradedb.py` provides the framework to change and/or maintain the database by means of several methods. E.g. first create an object of class GradeDB. Then apply method .addStudent() on that object in order to add a student to the database with its Name, Email and unique UniversitID. As an extra a student or a question can be added from the command line
 ***
 
 
